@@ -38,7 +38,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public static String[][] previousMatrix;
     public static Preferences pref;
     /**
-     * Creates new form NewJFrame
+     * Main program
      */
     public NewJFrame() {
         pref = Preferences.userNodeForPackage(NewJFrame.class);
