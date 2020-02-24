@@ -1150,13 +1150,20 @@ public class NewJFrame extends javax.swing.JFrame {
         JFileChooser fc = new JFileChooser();
         fc.showSaveDialog(this);
         File file = fc.getSelectedFile();
+        String separator = "--------------------------------------------------"
+                + "----------------------------------------------------------"
+                + "----------------------------------------------------------"
+                + "----------------------------------------------------------"
+                + "---------------\n";
         try {
             FileWriter fw = new FileWriter(file, true);
             BufferedWriter w = new BufferedWriter(fw);
-            String days = "";
+            String days = "| " + center("Monday") + " | " + center("Tuesday") + " | "
+                    + center("Wednesday") + " | " + center("Thursday") + " | " + 
+                    center("Friday") + " | " + center("Saturday") + " | " + center("Sunday") + " |\n";
             
             w.write(days);
-            System.out.println("hey");
+            w.write(separator);
             for (int i = 0; i < planGrid.getRowCount(); i++) {
                 String line = "|";
                 for (int ind = 0; ind < 7; ind++) {
@@ -1164,7 +1171,8 @@ public class NewJFrame extends javax.swing.JFrame {
                     if (planGrid.getValueAt(i, ind) != null) {
                         name = planGrid.getValueAt(i, ind).toString();
                         
-                    } 
+                    }
+                    name = center(name);
                     line += " " + name + " |";
                 }
                 w.write(line + "\n");
@@ -1174,40 +1182,15 @@ public class NewJFrame extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_jPanel4MousePressed
-    
-    public static void updateDatabase() {
-        //update database
-        try {
-            File temp = new File("temp.txt");
-            File old = new File("meals.txt");
-            
-            FileWriter fw = new FileWriter(temp, true);
-            BufferedWriter w = new BufferedWriter(fw);
-            Collections.sort(savedMeals, new MealComparator());
-
-            for (Meal m: savedMeals) {
-                w.write(Meal.NEW_MEAL + "\n");
-                w.write(Meal.MEAL_NAME + m.getName() + "\n");
-                w.write(Meal.MEAL_CALORIES + m.getCalories() + "\n");
-                w.write(Meal.MEAL_FATS + m.getFats() + "\n");
-                w.write(Meal.MEAL_CARBS + m.getCarbs() + "\n");
-                w.write(Meal.MEAL_PROTEIN + m.getProtein() + "\n");
-                w.write(Meal.MEAL_INGREDIENTS + m.getIngredientsAsString() + "\n");
-            }
-            
-            w.close();
-            if (old.exists()) {
-                Path path = Paths.get(old.getAbsolutePath());
-                Files.delete(path);
-            }
-            Path tempPath = Paths.get(temp.getAbsolutePath());
-            temp.renameTo(old);
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static String center(String string) {
+        int padSize = (15-string.length()/2);
+        int extra = (string.length()%2 == 0) ? 1 : 0;
+        
+        String leftPad = String.format("%" + padSize + "s", "");
+        String rightPad = String.format("%" + (padSize+extra) + "s", "");
+        
+        return leftPad + string + rightPad;
     }
-    
     public void loadMealsFromDatabase() throws ClassNotFoundException, SQLException {
         ResultSet res = MealDatabase.displayMeals();
         while(res.next()) {
