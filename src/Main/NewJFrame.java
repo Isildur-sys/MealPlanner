@@ -443,6 +443,9 @@ public class NewJFrame extends javax.swing.JFrame {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jPanel4MouseExited(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel4MousePressed(evt);
+            }
         });
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Main/icons/icons8_add_file_32px_1.png"))); // NOI18N
@@ -1142,6 +1145,35 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jPanel7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MousePressed
         new GoalsFrame();
     }//GEN-LAST:event_jPanel7MousePressed
+
+    private void jPanel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MousePressed
+        JFileChooser fc = new JFileChooser();
+        fc.showSaveDialog(this);
+        File file = fc.getSelectedFile();
+        try {
+            FileWriter fw = new FileWriter(file, true);
+            BufferedWriter w = new BufferedWriter(fw);
+            String days = "";
+            
+            w.write(days);
+            System.out.println("hey");
+            for (int i = 0; i < planGrid.getRowCount(); i++) {
+                String line = "|";
+                for (int ind = 0; ind < 7; ind++) {
+                    String name = "";
+                    if (planGrid.getValueAt(i, ind) != null) {
+                        name = planGrid.getValueAt(i, ind).toString();
+                        
+                    } 
+                    line += " " + name + " |";
+                }
+                w.write(line + "\n");
+            }
+            w.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jPanel4MousePressed
     
     public static void updateDatabase() {
         //update database
