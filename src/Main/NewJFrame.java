@@ -303,7 +303,30 @@ public class NewJFrame extends javax.swing.JFrame {
                 protein = Integer.parseInt(protein5.getText()) + m.getProtein() - pre.getProtein();
                 protein5.setText(protein + "");
                 break;
-                
+            case 6:
+                m = new Meal();
+                pre = new Meal();
+                for (Meal me: savedMeals) {
+                    if (me.getName().equals(sel)) {
+                        m = me;
+                    }
+                    if (me.getName().equals(prev)) {
+                        pre = me;
+                    }
+                }
+                //cals
+                newCals = Integer.parseInt(calories6.getText()) + m.getCalories() - pre.getCalories();
+                calories6.setText(newCals + "");
+                //fats
+                fats = Integer.parseInt(fats6.getText()) + m.getFats() - pre.getFats();
+                fats6.setText(fats + "");
+                //carbs
+                carbs = Integer.parseInt(carbs6.getText()) + m.getCarbs() - pre.getCarbs();
+                carbs6.setText(carbs + "");
+                //protein
+                protein = Integer.parseInt(protein6.getText()) + m.getProtein() - pre.getProtein();
+                protein6.setText(protein + "");
+                break; 
         }
     }
     
@@ -535,6 +558,9 @@ public class NewJFrame extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jPanel3MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel3MousePressed(evt);
             }
         });
 
@@ -1150,6 +1176,38 @@ public class NewJFrame extends javax.swing.JFrame {
         JFileChooser fc = new JFileChooser();
         fc.showSaveDialog(this);
         File file = fc.getSelectedFile();
+        generateFile(file);
+    }//GEN-LAST:event_jPanel4MousePressed
+
+    private void jPanel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MousePressed
+        for (int i = 0; i < planGrid.getRowCount(); i++) {
+            String line = "|";
+            for (int ind = 0; ind < 7; ind++) {
+                String name = "";
+                if (planGrid.getValueAt(i, ind) != null) {
+                    name = planGrid.getValueAt(i, ind).toString();
+                }
+                if (ind == 6 && i+1 == planGrid.getRowCount()) {
+                    pref.put("" + i + ", " + ind, name + "|");
+                } else {
+                    pref.put("" + i + ", " + ind, name);
+                }
+                
+            }      
+        }
+    }//GEN-LAST:event_jPanel3MousePressed
+    public static String center(String string) {
+        int padSize = (15-string.length()/2);
+        int extra = (string.length()%2 == 0) ? 1 : 0;
+        
+        String leftPad = String.format("%" + padSize + "s", "");
+        String rightPad = String.format("%" + (padSize+extra) + "s", "");
+        
+        return leftPad + string + rightPad;
+    }
+    
+    public void generateFile(File file) {
+        //generates textfile based on the inputs in the plangrid
         String separator = "--------------------------------------------------"
                 + "----------------------------------------------------------"
                 + "----------------------------------------------------------"
@@ -1177,20 +1235,41 @@ public class NewJFrame extends javax.swing.JFrame {
                 }
                 w.write(line + "\n");
             }
+            w.write("  " + center("Calories: " + Integer.parseInt(calories0.getText())) + "   "+ 
+                    center("Calories: " + Integer.parseInt(calories1.getText())) + "   " + 
+                    center("Calories: " + Integer.parseInt(calories2.getText())) + "   " + 
+                    center("Calories: " + Integer.parseInt(calories3.getText())) + "   " + 
+                    center("Calories: " + Integer.parseInt(calories4.getText())) + "   " + 
+                    center("Calories: " + Integer.parseInt(calories5.getText())) + "   " + 
+                    center("Calories: " + Integer.parseInt(calories6.getText())) + "\n");
+            w.write("  " + center("Carbs: " + Integer.parseInt(carbs0.getText())) + "   "+ 
+                    center("Carbs: " + Integer.parseInt(carbs1.getText())) + "   " + 
+                    center("Carbs: " + Integer.parseInt(carbs2.getText())) + "   " + 
+                    center("Carbs: " + Integer.parseInt(carbs3.getText())) + "   " + 
+                    center("Carbs: " + Integer.parseInt(carbs4.getText())) + "   " + 
+                    center("Carbs: " + Integer.parseInt(carbs5.getText())) + "   " + 
+                    center("Carbs: " + Integer.parseInt(carbs6.getText())) + "\n");
+            w.write("  " + center("Fats: " + Integer.parseInt(fats0.getText())) + "   "+ 
+                    center("Fats: " + Integer.parseInt(fats1.getText())) + "   " + 
+                    center("Fats: " + Integer.parseInt(fats2.getText())) + "   " + 
+                    center("Fats: " + Integer.parseInt(fats3.getText())) + "   " + 
+                    center("Fats: " + Integer.parseInt(fats4.getText())) + "   " + 
+                    center("Fats: " + Integer.parseInt(fats5.getText())) + "   " + 
+                    center("Fats: " + Integer.parseInt(fats6.getText())) + "\n");
+            w.write("  " + center("Protein: " + Integer.parseInt(protein0.getText())) + "   "+ 
+                    center("Protein: " + Integer.parseInt(protein1.getText())) + "   " + 
+                    center("Protein: " + Integer.parseInt(protein2.getText())) + "   " + 
+                    center("Protein: " + Integer.parseInt(protein3.getText())) + "   " + 
+                    center("Protein: " + Integer.parseInt(protein4.getText())) + "   " + 
+                    center("Protein: " + Integer.parseInt(protein5.getText())) + "   " + 
+                    center("Protein: " + Integer.parseInt(protein6.getText())) + "\n");
+            
             w.close();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }//GEN-LAST:event_jPanel4MousePressed
-    public static String center(String string) {
-        int padSize = (15-string.length()/2);
-        int extra = (string.length()%2 == 0) ? 1 : 0;
-        
-        String leftPad = String.format("%" + padSize + "s", "");
-        String rightPad = String.format("%" + (padSize+extra) + "s", "");
-        
-        return leftPad + string + rightPad;
     }
+    
     public void loadMealsFromDatabase() throws ClassNotFoundException, SQLException {
         ResultSet res = MealDatabase.displayMeals();
         while(res.next()) {
@@ -1203,7 +1282,7 @@ public class NewJFrame extends javax.swing.JFrame {
             m.setIngredients(res.getString("ingredients"));
             m.setInstructions(res.getString("instructions"));
             savedMeals.add(m);
-            System.out.println(m.getName());
+            
         }
         
     }
