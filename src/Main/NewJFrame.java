@@ -19,6 +19,7 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javafx.scene.control.ComboBox;
 import javax.swing.*;
@@ -37,10 +38,12 @@ public class NewJFrame extends javax.swing.JFrame {
     private int menuPanelY;
     public static String[][] previousMatrix;
     public static Preferences pref;
+    public static Preferences gridPref;
     /**
      * Main program
      */
     public NewJFrame() {
+        gridPref = Preferences.userNodeForPackage(NewJFrame.class);
         pref = Preferences.userNodeForPackage(NewJFrame.class);
         previousMatrix = new String[20][7];
         this.setResizable(false);
@@ -57,7 +60,6 @@ public class NewJFrame extends javax.swing.JFrame {
                 Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
         addPanels();
         jPanel7.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jPanel3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -66,6 +68,7 @@ public class NewJFrame extends javax.swing.JFrame {
         this.setPreferredSize(screenDimension());
         pack();
         this.setLocationRelativeTo(null);
+        getGridPref(); //loads saved grid if possible
     }
     
     public static boolean savedMealsContains(String name) {
@@ -1180,22 +1183,41 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel4MousePressed
 
     private void jPanel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MousePressed
-        for (int i = 0; i < planGrid.getRowCount(); i++) {
-            String line = "|";
-            for (int ind = 0; ind < 7; ind++) {
-                String name = "";
-                if (planGrid.getValueAt(i, ind) != null) {
-                    name = planGrid.getValueAt(i, ind).toString();
-                }
-                if (ind == 6 && i+1 == planGrid.getRowCount()) {
-                    pref.put("" + i + ", " + ind, name + "|");
-                } else {
-                    pref.put("" + i + ", " + ind, name);
-                }
+        //saves current grid values into gridPref
+        try {
+            gridPref.clear();
+            for (int i = 0; i < planGrid.getRowCount(); i++) {
                 
-            }      
+                for (int ind = 0; ind < 7; ind++) {      
+                    if (planGrid.getValueAt(i, ind)!= null) {
+                        gridPref.put("" + i + " " + ind, planGrid.getValueAt(i, ind).toString());
+                    }
+                    
+                }
+            }
+        } catch (BackingStoreException ex) {
+            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jPanel3MousePressed
+    
+    public static void getGridPref() {
+        //fills plangrid with the saved grid
+        try {
+            
+            String[] prefs = gridPref.keys();
+            for(int i = 0; i < prefs.length; i++) {
+                String name = gridPref.get(prefs[i], "");
+                String pos = prefs[i];
+                int row = Integer.parseInt("" + pos.charAt(0));
+                int col = Integer.parseInt("" + pos.charAt(2));
+                planGrid.setValueAt(name, row, col);
+                
+            }
+        } catch (BackingStoreException ex) {
+            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public static String center(String string) {
         int padSize = (15-string.length()/2);
         int extra = (string.length()%2 == 0) ? 1 : 0;
