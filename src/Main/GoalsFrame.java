@@ -243,11 +243,11 @@ public class GoalsFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        NewJFrame.pref.putInt("calories", Integer.parseInt(jTextField5.getText()));
-        NewJFrame.pref.putInt("carbs", Integer.parseInt(jTextField5.getText()));
-        NewJFrame.pref.putInt("fats", Integer.parseInt(jTextField5.getText()));
-        NewJFrame.pref.putInt("protein", Integer.parseInt(jTextField5.getText()));
-        NewJFrame.pref.putInt("count", Integer.parseInt(jTextField5.getText()));
+        NewJFrame.gridPref.putInt("calories", Integer.parseInt(jTextField1.getText()));
+        NewJFrame.gridPref.putInt("carbs", Integer.parseInt(jTextField2.getText()));
+        NewJFrame.gridPref.putInt("fats", Integer.parseInt(jTextField3.getText()));
+        NewJFrame.gridPref.putInt("protein", Integer.parseInt(jTextField4.getText()));
+        NewJFrame.gridPref.putInt("count", Integer.parseInt(jTextField5.getText()));
         
     }//GEN-LAST:event_jButton2ActionPerformed
 

@@ -37,14 +37,12 @@ public class NewJFrame extends javax.swing.JFrame {
     private int menuPanelX;
     private int menuPanelY;
     public static String[][] previousMatrix;
-    public static Preferences pref;
     public static Preferences gridPref;
     /**
      * Main program
      */
     public NewJFrame() {
         gridPref = Preferences.userNodeForPackage(NewJFrame.class);
-        pref = Preferences.userNodeForPackage(NewJFrame.class);
         previousMatrix = new String[20][7];
         this.setResizable(false);
         this.setUndecorated(true);
@@ -450,6 +448,7 @@ public class NewJFrame extends javax.swing.JFrame {
         carbs6 = new javax.swing.JLabel();
         protein6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         panelNorth = new javax.swing.JScrollPane();
         jPanel5 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -903,6 +902,13 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Generate");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton2MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelSouthLayout = new javax.swing.GroupLayout(panelSouth);
         panelSouth.setLayout(panelSouthLayout);
         panelSouthLayout.setHorizontalGroup(
@@ -994,8 +1000,8 @@ public class NewJFrame extends javax.swing.JFrame {
                             .addComponent(calories6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(fats6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(carbs6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(protein6, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 0, 0))
+                            .addComponent(protein6, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButton2)))
         );
         panelSouthLayout.setVerticalGroup(
             panelSouthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1118,6 +1124,8 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addGroup(panelSouthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel29)
                             .addComponent(protein3))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2)
                 .addContainerGap())
         );
 
@@ -1315,17 +1323,35 @@ public class NewJFrame extends javax.swing.JFrame {
             Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
+        LinkedList<Meal> n = new LinkedList<>();
+        MealGenerator m = new MealGenerator(n, savedMeals);
+        Meal[]t = m.generateMeals();
+        for (Meal me : t) {
+            System.out.println(me.getName());
+        }
+    }//GEN-LAST:event_jButton2MousePressed
     
     public static void getGridPref() {
         //fills plangrid with the saved grid
         try {
             
             String[] prefs = gridPref.keys();
+            
             for(int i = 0; i < prefs.length; i++) {
+                
                 String name = gridPref.get(prefs[i], "");
                 String pos = prefs[i];
-                int row = Integer.parseInt("" + pos.charAt(0));
-                int col = Integer.parseInt("" + pos.charAt(2));
+                int row;
+                int col;
+                
+                try {
+                    row = Integer.parseInt("" + pos.charAt(0));
+                    col = Integer.parseInt("" + pos.charAt(2));
+                } catch (NumberFormatException e) {
+                    continue;
+                }
                 planGrid.setValueAt(name, row, col);
                 
             }
@@ -1531,6 +1557,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel fats5;
     private javax.swing.JLabel fats6;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
