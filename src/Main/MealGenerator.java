@@ -37,7 +37,8 @@ public class MealGenerator {
         for(int i = 0; i < a.size(); i++) {
             allMeals[i] = a.get(i);
         }
-        
+
+        bestRes = new Meal[NewJFrame.gridPref.getInt("count", 0)];
         lowestScore = -1;
     }
     
@@ -63,19 +64,39 @@ public class MealGenerator {
     }
     
     public Meal[] generateMeals() {
-        generateBest(allMeals, NewJFrame.gridPref.getInt("count", 0), 0, new Meal[NewJFrame.gridPref.getInt("count", 0)]);
+        if (currentMeals.length != 0) {
+            if (NewJFrame.gridPref.getInt("count", 0) > currentMeals.length) {
+                int count = NewJFrame.gridPref.getInt("count", 0)-currentMeals.length;
+                generateBest(allMeals, count, 0, new Meal[count]);
+                           
+                //add current meals to the array generated above(have to create new array with right size)
+                int index = 0;
+                Meal[] tempRes = new Meal[NewJFrame.gridPref.getInt("count", 0)];
+                for(int i = 0; i < bestRes.length; i++) {
+                    //copy values from array generated to a new temp array
+                    tempRes[i] = bestRes[i];
+                }
+                
+                for (int i = count; i < tempRes.length; i++) {
+                    //add previous values to temp
+                    tempRes[i] = currentMeals[index];
+                    index++;
+                }
+                bestRes = tempRes; //make result array the temp array we just created
+            }
+        } else {
+            generateBest(allMeals, NewJFrame.gridPref.getInt("count", 0), 
+                    0, new Meal[NewJFrame.gridPref.getInt("count", 0)]);
+        }
         return bestRes;
     }
     
     private static void generateBest(Meal[] seq, int num, int start, Meal[] res) {
         //generate best binomial coefficient from all the foods available and amount
         //of meals preferred
-        
         if (num == 0) {
-            System.out.println(NewJFrame.gridPref.getInt("count", 0));
-            int currScore = getScore(res);
-            
-            if (currScore == -1 || currScore < lowestScore) {
+            int currScore = getScore(res);;
+            if (lowestScore == -1 || currScore < lowestScore) {
                 lowestScore = currScore;
                 bestRes = res;
             }

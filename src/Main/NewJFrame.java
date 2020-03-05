@@ -1348,8 +1348,21 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
-        LinkedList<Meal> n = new LinkedList<>();
-        MealGenerator m = new MealGenerator(n, savedMeals);
+        //first add all meals from the column associated with the button
+        LinkedList<Meal> currentMeals = new LinkedList<>();
+        for (int i = 0; i < planGrid.getRowCount(); i++) {
+            String name = (String)planGrid.getValueAt(i, 0);
+            if (name != null && !name.isEmpty()) {
+                for (Meal m: savedMeals) {
+                    if (m.getName().equals(name)) {
+                        currentMeals.add(m);
+                        break;
+                    }
+                }
+            }
+        }
+        
+        MealGenerator m = new MealGenerator(currentMeals, savedMeals);
         Meal[]t = m.generateMeals();
         for (Meal me : t) {
             System.out.println(me.getName());

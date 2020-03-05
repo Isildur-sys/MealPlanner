@@ -248,7 +248,6 @@ public class GoalsFrame extends javax.swing.JFrame {
         NewJFrame.gridPref.putInt("fats", Integer.parseInt(jTextField3.getText()));
         NewJFrame.gridPref.putInt("protein", Integer.parseInt(jTextField4.getText()));
         NewJFrame.gridPref.putInt("count", Integer.parseInt(jTextField5.getText()));
-        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
