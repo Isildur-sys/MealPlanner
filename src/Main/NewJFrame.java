@@ -67,6 +67,11 @@ public class NewJFrame extends javax.swing.JFrame {
         pack();
         this.setLocationRelativeTo(null);
         getGridPref(); //loads saved grid if possible
+        try{
+            System.out.println(gridPref.keys().length);
+        } catch (Exception e) {
+            
+        }
     }
     
     public static boolean savedMealsContains(String name) {
@@ -1292,7 +1297,16 @@ public class NewJFrame extends javax.swing.JFrame {
     private void jPanel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MousePressed
         //saves current grid values into gridPref
         try {
-            gridPref.clear();
+            //first, remove old saved grid values
+            String[] k = gridPref.keys();
+                if (k.length != 0) {
+                    for(String s: k) {
+                        if (Character.isDigit(s.charAt(0))) {
+                            gridPref.remove(s);
+                        }
+                    }
+            }
+            //then add new ones
             for (int i = 0; i < planGrid.getRowCount(); i++) {
                 
                 for (int ind = 0; ind < 7; ind++) {      
@@ -1314,7 +1328,16 @@ public class NewJFrame extends javax.swing.JFrame {
             int confirm = JOptionPane.showConfirmDialog(null, "Resetting will clear the"
                     + " current grid AND saved grid preferences.\nDo you wish to continue?", "Reset Grid", JOptionPane.YES_NO_OPTION);
             if (confirm == 0) {
-                gridPref.clear();
+                //only remove saved grid, not goals
+                String[] k = gridPref.keys();
+                if (k.length != 0) {
+                    for(String s: k) {
+                        if (Character.isDigit(s.charAt(0))) {
+                            gridPref.remove(s);
+                        }
+                    }
+                }
+                
                 planGridMod.setRowCount(0);
                 planGridMod.setRowCount(6);
             }
