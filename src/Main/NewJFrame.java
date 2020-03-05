@@ -67,6 +67,7 @@ public class NewJFrame extends javax.swing.JFrame {
         pack();
         this.setLocationRelativeTo(null);
         getGridPref(); //loads saved grid if possible
+
         try{
             System.out.println(gridPref.keys().length);
         } catch (Exception e) {

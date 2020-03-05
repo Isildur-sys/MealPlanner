@@ -21,8 +21,9 @@ public class GoalsFrame extends javax.swing.JFrame {
         this.setVisible(true);
         
         initComponents();
+        setFieldDefaults();//set previously saved values into textfields
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -104,18 +105,11 @@ public class GoalsFrame extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(230, 230, 230));
         jLabel5.setText("Protein");
 
-        jTextField1.setText("0");
-
-        jTextField2.setText("0");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
             }
         });
-
-        jTextField3.setText("0");
-
-        jTextField4.setText("0");
 
         jButton2.setBackground(new java.awt.Color(79, 13, 130));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -137,8 +131,6 @@ public class GoalsFrame extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(230, 230, 230));
         jLabel6.setText("Meal Count");
-
-        jTextField5.setText("0");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -243,13 +235,54 @@ public class GoalsFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        NewJFrame.gridPref.putInt("calories", Integer.parseInt(jTextField1.getText()));
-        NewJFrame.gridPref.putInt("carbs", Integer.parseInt(jTextField2.getText()));
-        NewJFrame.gridPref.putInt("fats", Integer.parseInt(jTextField3.getText()));
-        NewJFrame.gridPref.putInt("protein", Integer.parseInt(jTextField4.getText()));
-        NewJFrame.gridPref.putInt("count", Integer.parseInt(jTextField5.getText()));
+        if (jTextField1.getText() == null || jTextField1.getText().isEmpty()) {
+            NewJFrame.gridPref.remove("calories");
+        } else {
+            NewJFrame.gridPref.putInt("calories", Integer.parseInt(jTextField1.getText()));
+        }
+        if (jTextField2.getText() == null || jTextField2.getText().isEmpty()) {
+            NewJFrame.gridPref.remove("carbs");
+        } else {
+            NewJFrame.gridPref.putInt("carbs", Integer.parseInt(jTextField2.getText()));
+        }
+        if (jTextField3.getText() == null || jTextField3.getText().isEmpty()) {
+            NewJFrame.gridPref.remove("fats");
+        } else {
+            NewJFrame.gridPref.putInt("fats", Integer.parseInt(jTextField3.getText()));
+        }
+        if (jTextField4.getText() == null || jTextField4.getText().isEmpty()) {
+            NewJFrame.gridPref.remove("protein");
+        } else {
+            NewJFrame.gridPref.putInt("protein", Integer.parseInt(jTextField4.getText()));
+        }
+        if (jTextField5.getText() == null || jTextField5.getText().isEmpty()) {
+            NewJFrame.gridPref.remove("count");
+        } else {
+            NewJFrame.gridPref.putInt("count", Integer.parseInt(jTextField5.getText()));
+        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    
+    public void setFieldDefaults() {
+        //set textfields based on previous saved values
+        if (NewJFrame.gridPref.getInt("calories", -1) != -1) {
+            jTextField1.setText(NewJFrame.gridPref.getInt("calories", 0) + "");
+        }
+        if (NewJFrame.gridPref.getInt("carbs", -1) != -1) {
+            jTextField2.setText(NewJFrame.gridPref.getInt("carbs", 0) + "");
+        }
+        if (NewJFrame.gridPref.getInt("fats", -1) != -1) {
+            jTextField3.setText(NewJFrame.gridPref.getInt("fats", 0) + "");
+        }
+        if (NewJFrame.gridPref.getInt("protein", -1) != -1) {
+            jTextField4.setText(NewJFrame.gridPref.getInt("protein", 0) + "");
+        }
+        if (NewJFrame.gridPref.getInt("count", -1) != -1) {
+            jTextField5.setText(NewJFrame.gridPref.getInt("count", 0) + "");
+        }
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
