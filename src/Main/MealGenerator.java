@@ -10,7 +10,7 @@ import java.util.*;
  * @author maba9
  */
 public class MealGenerator {
-    private static Meal[] currentMeals;
+    private static LinkedList<Meal> currentMeals;
     private static Meal[] allMeals;
     private static Meal[] bestRes;
     
@@ -24,20 +24,24 @@ public class MealGenerator {
     
     public MealGenerator(LinkedList<Meal> c, LinkedList<Meal> a) {
         //transfer all meals and meals already added to the week into arrays
-        currentMeals = new Meal[c.size()];
+        currentMeals = new LinkedList<>();
         for (int i = 0; i < c.size(); i++) {
-            currentMeals[i] = c.get(i);
-            Meal curr = currentMeals[i];
+            Meal curr = c.get(i);
+            currentMeals.add(curr);
             currCalories += curr.getCalories();
             currCarbs += curr.getCarbs();
             currFats += curr.getFats();
             currProtein += curr.getProtein();
         }
-        allMeals = new Meal[a.size()];
+        
+        LinkedList<Meal> tempList = new LinkedList<>();
         for(int i = 0; i < a.size(); i++) {
-            allMeals[i] = a.get(i);
+            if (!currentMeals.contains(a.get(i))) {
+                tempList.add(a.get(i));
+            }
+            
         }
-
+        allMeals = tempList.toArray(new Meal[tempList.size()]);
         bestRes = new Meal[NewJFrame.gridPref.getInt("count", 0)];
         lowestScore = -1;
     }
@@ -64,25 +68,10 @@ public class MealGenerator {
     }
     
     public Meal[] generateMeals() {
-        if (currentMeals.length != 0) {
-            if (NewJFrame.gridPref.getInt("count", 0) > currentMeals.length) {
-                int count = NewJFrame.gridPref.getInt("count", 0)-currentMeals.length;
+        if (currentMeals.size() != 0) {
+            if (NewJFrame.gridPref.getInt("count", 0) > currentMeals.size()) {
+                int count = NewJFrame.gridPref.getInt("count", 0)-currentMeals.size();
                 generateBest(allMeals, count, 0, new Meal[count]);
-                           
-                //add current meals to the array generated above(have to create new array with right size)
-                int index = 0;
-                Meal[] tempRes = new Meal[NewJFrame.gridPref.getInt("count", 0)];
-                for(int i = 0; i < bestRes.length; i++) {
-                    //copy values from array generated to a new temp array
-                    tempRes[i] = bestRes[i];
-                }
-                
-                for (int i = count; i < tempRes.length; i++) {
-                    //add previous values to temp
-                    tempRes[i] = currentMeals[index];
-                    index++;
-                }
-                bestRes = tempRes; //make result array the temp array we just created
             }
         } else {
             generateBest(allMeals, NewJFrame.gridPref.getInt("count", 0), 
@@ -107,8 +96,6 @@ public class MealGenerator {
             generateBest(seq, num-1, i+1, res);
         }
     }
-    
-    
     
     private static boolean thereIs(String type) {
         //checks if current meals contains food with the type listed as parameter

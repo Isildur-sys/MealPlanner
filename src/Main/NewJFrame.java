@@ -67,12 +67,6 @@ public class NewJFrame extends javax.swing.JFrame {
         pack();
         this.setLocationRelativeTo(null);
         getGridPref(); //loads saved grid if possible
-
-        try{
-            System.out.println(gridPref.keys().length);
-        } catch (Exception e) {
-            
-        }
     }
     
     public static boolean savedMealsContains(String name) {
@@ -132,9 +126,6 @@ public class NewJFrame extends javax.swing.JFrame {
                 if (e.getStateChange()== ItemEvent.SELECTED) {
                     String str = cb.getSelectedItem().toString();
 
-                    if (previousMatrix[row][column] == null) {
-                        previousMatrix[row][column] = ""; 
-                    }
                     String previous = previousMatrix[row][column];
                     if (!previous.equals(str)) { 
                         mapComboToInfo(column, str, previous);
@@ -164,8 +155,11 @@ public class NewJFrame extends javax.swing.JFrame {
         int fats;
         int carbs;
         int protein;
+        if (prev == null) {
+            prev = ""; 
+        }
         switch (col) {
-           
+            
             case 0:
                 m = new Meal();
                 pre = new Meal();
@@ -1362,12 +1356,29 @@ public class NewJFrame extends javax.swing.JFrame {
                 }
             }
         }
-        
-        MealGenerator m = new MealGenerator(currentMeals, savedMeals);
-        Meal[]t = m.generateMeals();
-        for (Meal me : t) {
-            System.out.println(me.getName());
+        if (currentMeals.size() < gridPref.getInt("count", 0)) {
+            MealGenerator mg = new MealGenerator(currentMeals, savedMeals);
+            Meal[]generated = mg.generateMeals();
+            for (Meal m: generated) {
+                int ind = 0;
+                while(true) {
+                    if (ind+1 == planGrid.getRowCount()) {
+                        planGridMod.setRowCount(planGrid.getRowCount()+1);
+                    }
+                    Object curr = planGrid.getValueAt(ind, 0);
+                    
+                    if (curr == null || curr.toString().isEmpty()) {
+                        
+                        String prev = previousMatrix[ind][0];
+                        mapComboToInfo(0, m.getName(), prev);
+                        planGrid.setValueAt(m.getName(), ind, 0);
+                        break;
+                    }
+                    ind++;
+                }
+            }
         }
+        
     }//GEN-LAST:event_jButton2MousePressed
     
     public static void getGridPref() {
