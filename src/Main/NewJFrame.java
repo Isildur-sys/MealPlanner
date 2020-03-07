@@ -1371,6 +1371,7 @@ public class NewJFrame extends javax.swing.JFrame {
                         
                         String prev = previousMatrix[ind][0];
                         mapComboToInfo(0, m.getName(), prev);
+                        previousMatrix[ind][0] = m.getName();
                         planGrid.setValueAt(m.getName(), ind, 0);
                         break;
                     }
@@ -1381,7 +1382,7 @@ public class NewJFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton2MousePressed
     
-    public static void getGridPref() {
+    public void getGridPref() {
         //fills plangrid with the saved grid
         try {
             
@@ -1401,6 +1402,10 @@ public class NewJFrame extends javax.swing.JFrame {
                     continue;
                 }
                 planGrid.setValueAt(name, row, col);
+                if (name != null && !name.isEmpty()) {
+                    mapComboToInfo(col, name, null);
+                    previousMatrix[row][col] = name;
+                }
                 
             }
         } catch (BackingStoreException ex) {
