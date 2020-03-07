@@ -48,7 +48,7 @@ public class EditFrame extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent e) {
                 int row = nameGrid.getSelectedRow();
                 String select = nameGridMod.getValueAt(row, nameGrid.getSelectedColumn()).toString();
-                Meal m = NewJFrame.savedMeals.get(row);
+                Meal m = MainFrame.savedMeals.get(row);
                 jTextField1.setText(m.getName());
                 jTextField3.setText("" + m.getCalories());
                 jTextField4.setText("" + m.getCarbs());
@@ -65,7 +65,7 @@ public class EditFrame extends javax.swing.JFrame {
     private void populateTableModel() { 
         nameGridMod.setRowCount(0);
         Object[] data = new Object[1];
-        for (Meal m: NewJFrame.savedMeals) {
+        for (Meal m: MainFrame.savedMeals) {
             data[0] = m.getName();
             
             nameGridMod.addRow(data);
@@ -438,7 +438,7 @@ public class EditFrame extends javax.swing.JFrame {
             try {
                 String name = nameGrid.getValueAt(nameGrid.getSelectedRow(), nameGrid.getSelectedColumn()).toString();
                 MealDatabase.delete(name);
-                NewJFrame.savedMeals.remove(nameGrid.getSelectedRow());
+                MainFrame.savedMeals.remove(nameGrid.getSelectedRow());
                 nameGridMod.removeRow(nameGrid.getSelectedRow());
                 nameGridMod.fireTableDataChanged();
                 
@@ -456,7 +456,7 @@ public class EditFrame extends javax.swing.JFrame {
         if (nameGrid.getSelectedRow() != -1 && jTextField1.getText() != null && 
                 !jTextField1.getText().isEmpty()) {
             String oldname = nameGrid.getValueAt(nameGrid.getSelectedRow(), nameGrid.getSelectedColumn()).toString();
-            for (Meal m: NewJFrame.savedMeals) {
+            for (Meal m: MainFrame.savedMeals) {
                 if (m.getName().equals(oldname)){
                     m.setName(jTextField1.getText());
                     m.setCalories(jTextField3.getText());
@@ -489,7 +489,7 @@ public class EditFrame extends javax.swing.JFrame {
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         Meal newMeal = new Meal();
         String name = jTextField1.getText();
-        if (!name.isEmpty() && !NewJFrame.savedMealsContains(name)) {
+        if (!name.isEmpty() && !MainFrame.savedMealsContains(name)) {
             String calories = jTextField3.getText();
             String fat = jTextField4.getText();
             String carbs = jTextField5.getText();
@@ -506,8 +506,8 @@ public class EditFrame extends javax.swing.JFrame {
             newMeal.setType(type);
             newMeal.setIngredients(ingredients);
             newMeal.setInstructions(instructions);
-            NewJFrame.savedMeals.add(newMeal);
-            Collections.sort(NewJFrame.savedMeals, new MealComparator());
+            MainFrame.savedMeals.add(newMeal);
+            Collections.sort(MainFrame.savedMeals, new MealComparator());
             try {
                 MealDatabase.addMeal(newMeal);
                 populateTableModel();
@@ -517,7 +517,7 @@ public class EditFrame extends javax.swing.JFrame {
                 Logger.getLogger(NewMeal.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-        } else if (NewJFrame.savedMealsContains(name)) {
+        } else if (MainFrame.savedMealsContains(name)) {
             JOptionPane.showMessageDialog(null, "A recipe with this name already exists.");
         } else {
             jTextField1.setBorder(new LineBorder(Color.RED));
