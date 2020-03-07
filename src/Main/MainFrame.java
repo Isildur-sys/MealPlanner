@@ -30,7 +30,7 @@ import javax.swing.table.*;
  *
  * @author maba9
  */
-public class NewJFrame extends javax.swing.JFrame {
+public class MainFrame extends javax.swing.JFrame {
     public static LinkedList<Meal> savedMeals = new LinkedList();
     private static JTable planGrid;
     private static DefaultTableModel planGridMod;
@@ -41,8 +41,8 @@ public class NewJFrame extends javax.swing.JFrame {
     /**
      * Main program
      */
-    public NewJFrame() {
-        gridPref = Preferences.userNodeForPackage(NewJFrame.class);
+    public MainFrame() {
+        gridPref = Preferences.userNodeForPackage(MainFrame.class);
         previousMatrix = new String[20][7];
         this.setResizable(false);
         this.setUndecorated(true);
@@ -53,9 +53,9 @@ public class NewJFrame extends javax.swing.JFrame {
             try { 
                 loadMealsFromDatabase();
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
-                Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         addPanels();
@@ -1312,7 +1312,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 }
             }
         } catch (BackingStoreException ex) {
-            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jPanel3MousePressed
 
@@ -1338,7 +1338,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
             
         } catch (BackingStoreException ex) {
-            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -1356,7 +1356,8 @@ public class NewJFrame extends javax.swing.JFrame {
                 }
             }
         }
-        if (currentMeals.size() < gridPref.getInt("count", 0)) {
+        if (currentMeals.size() < gridPref.getInt("count", 0) &&
+               gridPref.getInt("count", 0) < savedMeals.size()) {
             MealGenerator mg = new MealGenerator(currentMeals, savedMeals);
             Meal[]generated = mg.generateMeals();
             for (Meal m: generated) {
@@ -1378,6 +1379,10 @@ public class NewJFrame extends javax.swing.JFrame {
                     ind++;
                 }
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Meal count set in 'Set Goals' "
+                    + "must be higher than currently selected meals and lower than"
+                    + " the amount of recipes added.", "Cannot generate with set values", JOptionPane.INFORMATION_MESSAGE);
         }
         
     }//GEN-LAST:event_jButton2MousePressed
@@ -1409,7 +1414,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 
             }
         } catch (BackingStoreException ex) {
-            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -1570,20 +1575,21 @@ public class NewJFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewJFrame().setVisible(true);
+                new MainFrame().setVisible(true);
             }
         });
     }

@@ -359,8 +359,8 @@ public class NewMeal extends javax.swing.JFrame {
             newMeal.setType(type);
             newMeal.setIngredients(ingredients);
             newMeal.setInstructions(instructions);
-            NewJFrame.savedMeals.add(newMeal);
-            Collections.sort(NewJFrame.savedMeals, new MealComparator());
+            MainFrame.savedMeals.add(newMeal);
+            Collections.sort(MainFrame.savedMeals, new MealComparator());
             try {
                 //NewJFrame.updateDatabase();
                 MealDatabase.addMeal(newMeal);

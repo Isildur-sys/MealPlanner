@@ -42,7 +42,7 @@ public class MealGenerator {
             
         }
         allMeals = tempList.toArray(new Meal[tempList.size()]);
-        bestRes = new Meal[NewJFrame.gridPref.getInt("count", 0)];
+        bestRes = new Meal[MainFrame.gridPref.getInt("count", 0)];
         lowestScore = -1;
     }
     
@@ -60,22 +60,22 @@ public class MealGenerator {
             carbs += m.getCarbs();
             protein += m.getProtein();
         }
-        score += (NewJFrame.gridPref.getInt("calories", calories) - calories);
-        score += (NewJFrame.gridPref.getInt("fats", fats) - fats);
-        score += (NewJFrame.gridPref.getInt("carbs", carbs) - carbs);
-        score += (NewJFrame.gridPref.getInt("protein", protein) - protein);
+        score += (MainFrame.gridPref.getInt("calories", calories) - calories);
+        score += (MainFrame.gridPref.getInt("fats", fats) - fats);
+        score += (MainFrame.gridPref.getInt("carbs", carbs) - carbs);
+        score += (MainFrame.gridPref.getInt("protein", protein) - protein);
         return Math.abs(score);
     }
     
     public Meal[] generateMeals() {
         if (currentMeals.size() != 0) {
-            if (NewJFrame.gridPref.getInt("count", 0) > currentMeals.size()) {
-                int count = NewJFrame.gridPref.getInt("count", 0)-currentMeals.size();
+            if (MainFrame.gridPref.getInt("count", 0) > currentMeals.size()) {
+                int count = MainFrame.gridPref.getInt("count", 0)-currentMeals.size();
                 generateBest(allMeals, count, 0, new Meal[count]);
             }
         } else {
-            generateBest(allMeals, NewJFrame.gridPref.getInt("count", 0), 
-                    0, new Meal[NewJFrame.gridPref.getInt("count", 0)]);
+            generateBest(allMeals, MainFrame.gridPref.getInt("count", 0), 
+                    0, new Meal[MainFrame.gridPref.getInt("count", 0)]);
         }
         return bestRes;
     }

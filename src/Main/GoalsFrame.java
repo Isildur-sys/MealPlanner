@@ -236,49 +236,49 @@ public class GoalsFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (jTextField1.getText() == null || jTextField1.getText().isEmpty()) {
-            NewJFrame.gridPref.remove("calories");
+            MainFrame.gridPref.remove("calories");
         } else {
-            NewJFrame.gridPref.putInt("calories", Integer.parseInt(jTextField1.getText()));
+            MainFrame.gridPref.putInt("calories", Integer.parseInt(jTextField1.getText()));
         }
         if (jTextField2.getText() == null || jTextField2.getText().isEmpty()) {
-            NewJFrame.gridPref.remove("carbs");
+            MainFrame.gridPref.remove("carbs");
         } else {
-            NewJFrame.gridPref.putInt("carbs", Integer.parseInt(jTextField2.getText()));
+            MainFrame.gridPref.putInt("carbs", Integer.parseInt(jTextField2.getText()));
         }
         if (jTextField3.getText() == null || jTextField3.getText().isEmpty()) {
-            NewJFrame.gridPref.remove("fats");
+            MainFrame.gridPref.remove("fats");
         } else {
-            NewJFrame.gridPref.putInt("fats", Integer.parseInt(jTextField3.getText()));
+            MainFrame.gridPref.putInt("fats", Integer.parseInt(jTextField3.getText()));
         }
         if (jTextField4.getText() == null || jTextField4.getText().isEmpty()) {
-            NewJFrame.gridPref.remove("protein");
+            MainFrame.gridPref.remove("protein");
         } else {
-            NewJFrame.gridPref.putInt("protein", Integer.parseInt(jTextField4.getText()));
+            MainFrame.gridPref.putInt("protein", Integer.parseInt(jTextField4.getText()));
         }
         if (jTextField5.getText() == null || jTextField5.getText().isEmpty()) {
-            NewJFrame.gridPref.remove("count");
+            MainFrame.gridPref.remove("count");
         } else {
-            NewJFrame.gridPref.putInt("count", Integer.parseInt(jTextField5.getText()));
+            MainFrame.gridPref.putInt("count", Integer.parseInt(jTextField5.getText()));
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
     
     public void setFieldDefaults() {
         //set textfields based on previous saved values
-        if (NewJFrame.gridPref.getInt("calories", -1) != -1) {
-            jTextField1.setText(NewJFrame.gridPref.getInt("calories", 0) + "");
+        if (MainFrame.gridPref.getInt("calories", -1) != -1) {
+            jTextField1.setText(MainFrame.gridPref.getInt("calories", 0) + "");
         }
-        if (NewJFrame.gridPref.getInt("carbs", -1) != -1) {
-            jTextField2.setText(NewJFrame.gridPref.getInt("carbs", 0) + "");
+        if (MainFrame.gridPref.getInt("carbs", -1) != -1) {
+            jTextField2.setText(MainFrame.gridPref.getInt("carbs", 0) + "");
         }
-        if (NewJFrame.gridPref.getInt("fats", -1) != -1) {
-            jTextField3.setText(NewJFrame.gridPref.getInt("fats", 0) + "");
+        if (MainFrame.gridPref.getInt("fats", -1) != -1) {
+            jTextField3.setText(MainFrame.gridPref.getInt("fats", 0) + "");
         }
-        if (NewJFrame.gridPref.getInt("protein", -1) != -1) {
-            jTextField4.setText(NewJFrame.gridPref.getInt("protein", 0) + "");
+        if (MainFrame.gridPref.getInt("protein", -1) != -1) {
+            jTextField4.setText(MainFrame.gridPref.getInt("protein", 0) + "");
         }
-        if (NewJFrame.gridPref.getInt("count", -1) != -1) {
-            jTextField5.setText(NewJFrame.gridPref.getInt("count", 0) + "");
+        if (MainFrame.gridPref.getInt("count", -1) != -1) {
+            jTextField5.setText(MainFrame.gridPref.getInt("count", 0) + "");
         }
         
     }
