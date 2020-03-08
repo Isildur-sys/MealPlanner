@@ -472,6 +472,9 @@ public class MainFrame extends javax.swing.JFrame {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jPanel4MousePressed(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jPanel4MouseReleased(evt);
+            }
         });
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Main/icons/icons8_add_file_32px_1.png"))); // NOI18N
@@ -565,6 +568,9 @@ public class MainFrame extends javax.swing.JFrame {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jPanel3MousePressed(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jPanel3MouseReleased(evt);
+            }
         });
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Main/icons/icons8_save_32px_1.png"))); // NOI18N
@@ -606,6 +612,9 @@ public class MainFrame extends javax.swing.JFrame {
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jPanel7MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jPanel7MouseReleased(evt);
             }
         });
 
@@ -1279,17 +1288,20 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel7MouseEntered
 
     private void jPanel7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MousePressed
+        jPanel7.setBackground(Color.decode("#2D1A44"));
         new GoalsFrame();
     }//GEN-LAST:event_jPanel7MousePressed
 
     private void jPanel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MousePressed
+        jPanel4.setBackground(Color.decode("#2D1A44"));
         JFileChooser fc = new JFileChooser();
         fc.showSaveDialog(this);
         File file = fc.getSelectedFile();
-        generateFile(file);
+        generateFile(file);   
     }//GEN-LAST:event_jPanel4MousePressed
 
     private void jPanel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MousePressed
+        jPanel3.setBackground(Color.decode("#2D1A44"));
         //saves current grid values into gridPref
         try {
             //first, remove old saved grid values
@@ -1386,6 +1398,45 @@ public class MainFrame extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton2MousePressed
+
+    private void jPanel7MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseReleased
+        SwingWorker<Void, String> worker = new SwingWorker<Void, String>(){
+
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(80);
+                jPanel7.setBackground(Color.decode("#4f0d82"));
+                return null;
+            }
+         };
+        worker.execute();
+    }//GEN-LAST:event_jPanel7MouseReleased
+
+    private void jPanel4MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseReleased
+        SwingWorker<Void, String> worker = new SwingWorker<Void, String>(){
+
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(80);
+                jPanel4.setBackground(Color.decode("#4f0d82"));
+                return null;
+            }
+         };
+        worker.execute();
+    }//GEN-LAST:event_jPanel4MouseReleased
+
+    private void jPanel3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseReleased
+        SwingWorker<Void, String> worker = new SwingWorker<Void, String>(){
+
+            @Override
+            protected Void doInBackground() throws Exception {
+                Thread.sleep(80);
+                jPanel3.setBackground(Color.decode("#4f0d82"));
+                return null;
+            }
+         };
+        worker.execute();
+    }//GEN-LAST:event_jPanel3MouseReleased
     
     public void getGridPref() {
         //fills plangrid with the saved grid
@@ -1489,6 +1540,8 @@ public class MainFrame extends javax.swing.JFrame {
             w.close();
         } catch (IOException ex) {
             ex.printStackTrace();
+        } catch (NullPointerException e) {
+            
         }
     }
     

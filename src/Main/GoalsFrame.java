@@ -16,6 +16,9 @@ public class GoalsFrame extends javax.swing.JFrame {
     /**
      * Creates new form GoalsFrame
      */
+    private int menuPanelX;
+    private int menuPanelY;
+    
     public GoalsFrame() {
         this.setUndecorated(true);
         this.setVisible(true);
@@ -53,6 +56,16 @@ public class GoalsFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(79, 13, 130));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         jLabel7.setBackground(new java.awt.Color(79, 13, 130));
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Main/icons/icons8_delete_28px.png"))); // NOI18N
@@ -262,6 +275,17 @@ public class GoalsFrame extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        menuPanelX = evt.getX();
+        menuPanelY = evt.getY();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x-menuPanelX, y-menuPanelY);
+    }//GEN-LAST:event_jPanel1MouseDragged
     
     public void setFieldDefaults() {
         //set textfields based on previous saved values
