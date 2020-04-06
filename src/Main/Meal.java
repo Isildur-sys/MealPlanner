@@ -123,6 +123,7 @@ public class Meal {
     
     public void setIngredients(String t) {
         String[] i = t.split("\n");
+        ingredients.clear();
         for (int ind = 0; i.length > ind; ind++) {
             ingredients.add(i[ind]);
         }

@@ -51,8 +51,8 @@ public class EditFrame extends javax.swing.JFrame {
                 Meal m = MainFrame.savedMeals.get(row);
                 jTextField1.setText(m.getName());
                 jTextField3.setText("" + m.getCalories());
-                jTextField4.setText("" + m.getCarbs());
-                jTextField5.setText("" + m.getFats());
+                jTextField4.setText("" + m.getFats());
+                jTextField5.setText("" + m.getCarbs());
                 jTextField6.setText("" + m.getProtein());
                 jComboBox1.setSelectedItem(m.getType());
                 jTextArea1.setText(m.getIngredientsAsString());
@@ -175,9 +175,9 @@ public class EditFrame extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel4)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel5)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
@@ -207,11 +207,11 @@ public class EditFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -460,8 +460,8 @@ public class EditFrame extends javax.swing.JFrame {
                 if (m.getName().equals(oldname)){
                     m.setName(jTextField1.getText());
                     m.setCalories(jTextField3.getText());
-                    m.setCarbs(jTextField4.getText());
-                    m.setFats(jTextField5.getText());
+                    m.setFats(jTextField4.getText());
+                    m.setCarbs(jTextField5.getText());
                     m.setProtein(jTextField6.getText());
                     m.setType(jComboBox1.getSelectedItem().toString());
                     m.setIngredients(jTextArea1.getText());

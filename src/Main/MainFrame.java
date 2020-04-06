@@ -1661,6 +1661,7 @@ public class MainFrame extends javax.swing.JFrame {
             m.setCarbs(res.getString("carbs"));
             m.setFats(res.getString("fats"));
             m.setProtein(res.getString("protein"));
+            m.setType(res.getString("type"));
             m.setIngredients(res.getString("ingredients"));
             m.setInstructions(res.getString("instructions"));
             savedMeals.add(m);
