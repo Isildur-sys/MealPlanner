@@ -26,7 +26,7 @@ import javafx.scene.control.ComboBox;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.*;
-
+import java.lang.reflect.*;
 /**
  *
  * @author maba9
@@ -1420,6 +1420,15 @@ public class MainFrame extends javax.swing.JFrame {
                             gridPref.remove(s);
                         }
                     }
+                }
+                
+                JLabel[] labels = new JLabel[] {calories0,fats0, carbs0, protein0,
+                calories1,fats1, carbs1, protein1, calories2,fats2, carbs2, protein2,
+                calories3,fats3, carbs3, protein3, calories4,fats4, carbs4, protein4,
+                calories5,fats5, carbs5, protein5, calories6,fats6, carbs6, protein6};
+                
+                for(JLabel label : labels) {
+                    label.setText("0");
                 }
                 
                 planGridMod.setRowCount(0);
